@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kuanta — Operations ERP Flyer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --k: #0A0A0F;
+  --k2: #111118;
+  --acid: #C8FF00;
+  --acid-dim: rgba(200, 255, 0, 0.2);
+  --blue: #3A51F0;
+  --text: #F0EEF8;
+  --muted: rgba(240, 238, 248, 0.6);
+  --rim: rgba(255, 255, 255, 0.1);
+  --syne: 'Syne', sans-serif;
+  --dm: 'DM Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  background-color: #050508; /* Darker outside the flyer */
+  color: var(--text);
+  font-family: var(--dm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 20px;
+  perspective: 1000px;
+}
+
+/* Background grid for the overall page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+}
+
+/* ─── A5 FLYER CONTAINER ─── */
+/* A5 Ratio is 1 : 1.414 */
+.flyer-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1 / 1.414;
+  background: var(--k);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05);
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+}
+
+/* Noise overlay inside flyer */
+.flyer-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ─── LIQUID ANIMATION BACKGROUND ─── */
+.liquid-bg {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  filter: blur(60px);
+  opacity: 0.7;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  animation: floatOrb 12s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+  width: 350px; height: 350px;
+  background: var(--acid);
+  top: 10%; left: -10%;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 400px; height: 400px;
+  background: rgba(58, 81, 240, 0.8); /* Deep tech blue to contrast acid */
+  bottom: 0%; right: -20%;
+  animation-delay: -4s;
+}
+
+.orb-3 {
+  width: 250px; height: 250px;
+  background: var(--acid2);
+  top: 40%; left: 30%;
+  animation-delay: -8s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -50px) scale(1.1); }
+  100% { transform: translate(-40px, 20px) scale(0.9); }
+}
+
+/* ─── FLYER CONTENT ─── */
+.content-layer {
+  position: relative;
+  z-index: 5;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 8% 6%;
+}
+
+/* Header */
+.flyer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: auto; /* Pushes middle content down */
+}
+
+.logo-svg {
+  height: 20px;
+  color: #fff;
+}
+
+.system-status {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--acid);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(10,10,15,0.5);
+  padding: 6px 10px;
+  border: 1px solid var(--acid-dim);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+.system-status::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--acid);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--acid);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; box-shadow: 0 0 12px var(--acid); }
+}
+
+/* Middle / Glassmorphism Panel */
+.glass-panel {
+  background: rgba(17, 17, 24, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--rim);
+  border-top: 1px solid rgba(200, 255, 0, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--acid), transparent);
+  opacity: 0.5;
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--acid);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: '';
+  width: 16px; height: 1px;
+  background: var(--acid);
+}
+
+.title {
+  font-family: var(--syne);
+  font-size: clamp(28px, 8cqw, 42px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: #fff;
+}
+.title em {
+  font-style: normal;
+  color: var(--acid);
+}
+
+.subtitle {
+  font-size: clamp(13px, 3.5cqw, 15px);
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Bottom / QR Section */
+.qr-section {
+  display: flex;
+  align-items: stretch;
+  gap: 15px;
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--rim);
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.qr-code-box {
+  width: 90px;
+  height: 90px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(200, 255, 0, 0.1);
+  border: 2px solid var(--acid);
+  position: relative;
+}
+
+/* A highly accurate CSS representation of a QR code */
+.qr-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.qr-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.qr-instruction {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--acid);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.qr-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-bottom: auto;
+}
+
+.qr-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Corner Accents */
+.corner {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-style: solid;
+  border-color: var(--acid-dim);
+  border-width: 0;
+  z-index: 10;
+}
+.c-tl { top: 15px; left: 15px; border-top-width: 1px; border-left-width: 1px; }
+.c-tr { top: 15px; right: 15px; border-top-width: 1px; border-right-width: 1px; }
+.c-bl { bottom: 15px; left: 15px; border-bottom-width: 1px; border-left-width: 1px; }
+.c-br { bottom: 15px; right: 15px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* Responsive adjustments for extremely small screens */
+@media (max-width: 400px) {
+  .flyer-wrapper { border-radius: 0; aspect-ratio: auto; height: 100vh; }
+  .content-layer { padding: 12% 8%; }
+  .qr-section { flex-direction: column; align-items: center; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="flyer-wrapper" id="flyer">
+  
+  <!-- Corner Accents -->
+  <div class="corner c-tl"></div>
+  <div class="corner c-tr"></div>
+  <div class="corner c-bl"></div>
+  <div class="corner c-br"></div>
+
+  <!-- Liquid Animated Background -->
+  <div class="liquid-bg" id="liquid">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Content Layer -->
+  <div class="content-layer">
+    
+    <!-- Top Header -->
+    <div class="flyer-header">
+      <svg class="logo-svg" viewBox="0 0 339.06 85.01" xmlns="http://www.w3.org/2000/svg">
+        <rect fill="currentColor" x="33.2" y="25.57" width="5.1" height="38.76"/>
+        <path fill="currentColor" d="M52.9,51.94c0,1.81.27,3.55.78,5.19,2.13,6.85,9.38,13.06,16.86,12.2,3.58-.41,6.52-2.78,6.52-6.58,0-.1,0-.2,0-.3-.16-3.55-3.09-6.38-6.67-6.38s-6.52,2.83-6.67,6.38c-3.47-2.21-5.78-6.1-5.78-10.51v-9.16h-5.04v9.16Z"/>
+        <polygon fill="currentColor" points="71.96 25.57 46.56 64.33 33.2 64.33 58.59 25.57 71.96 25.57"/>
+        <path fill="currentColor" d="M121.32,25.57v26.58c0,6.73-5.46,12.19-12.19,12.19h-14.39c-6.73,0-12.19-5.46-12.19-12.19v-26.58h5.1v17.28c0,4.49,3.64,8.12,8.12,8.12h12.3c4.49,0,8.12-3.64,8.12-8.12v-17.28h5.1Z"/>
+        <path fill="currentColor" d="M131.92,62.16v-26.58c0-6.73,5.46-12.19,12.19-12.19h14.39c6.73,0,12.19,5.46,12.19,12.19v26.58h-5.1v-17.28c0-4.49-3.64-8.12-8.12-8.12h-12.3c-4.49,0-8.12,3.64-8.12,8.12v17.28h-5.1Z"/>
+        <circle fill="#C8FF00" cx="151.3" cy="55.48" r="6.68"/>
+        <g fill="currentColor"><rect x="181.29" y="23.4" width="5.1" height="38.76"/><rect x="214.94" y="23.4" width="5.1" height="38.76"/><polygon points="181.29 23.4 206.68 62.16 220.04 62.16 194.65 23.4 181.29 23.4"/></g>
+        <g fill="currentColor"><rect x="247.48" y="23.4" width="5.1" height="38.76"/><rect x="230.65" y="23.4" width="38.76" height="13.36"/></g>
+        <path fill="#C8FF00" d="M305.25,55.48c0,3.69-2.99,6.68-6.68,6.68s-6.68-2.99-6.68-6.68,2.99-6.68,6.68-6.68,6.68,2.99,6.68,6.68Z"/>
+        <path fill="currentColor" d="M279.19,62.16v-26.58c0-6.73,5.46-12.19,12.19-12.19h14.39c6.73,0,12.19,5.46,12.19,12.19v26.58h-5.1v-17.28c0-4.49-3.64-8.12-8.12-8.12h-12.3c-4.49,0-8.12,3.64-8.12,8.12v17.28h-5.1Z"/>
+      </svg>
+      <div class="system-status">SYS_LIVE</div>
+    </div>
+
+    <!-- Main Value Prop -->
+    <div class="glass-panel">
+      <div class="eyebrow">FRACTIONAL OPERATIONS</div>
+      <h1 class="title">Scale without<br>the <em>chaos.</em></h1>
+      <p class="subtitle">We build the autonomous cloud infrastructure, AI routing protocols, and telemetry grids mid-market brands use to eliminate management overhead and accelerate revenue.</p>
+    </div>
+
+    <!-- QR Code Section -->
+    <div class="qr-section">
+      <div class="qr-code-box">
+        <!-- SVG Placeholder for QR Code. Replace this SVG with your actual exported QR code pointing to kuanta.agency/engine.html -->
+        <svg class="qr-svg" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#0A0A0F" d="M0,0 h9 v9 h-9 z M2,2 h5 v5 h-5 z M3,3 h3 v3 h-3 z M24,0 h9 v9 h-9 z M26,2 h5 v5 h-5 z M27,3 h3 v3 h-3 z M0,24 h9 v9 h-9 z M2,26 h5 v5 h-5 z M3,27 h3 v3 h-3 z M11,0 h2 v2 h-2 z M14,0 h4 v2 h-4 z M19,0 h2 v3 h-2 z M10,3 h3 v2 h-3 z M14,3 h1 v2 h-1 z M16,3 h2 v1 h-2 z M20,4 h2 v1 h-2 z M11,6 h2 v2 h-2 z M14,6 h1 v1 h-1 z M16,6 h3 v2 h-3 z M20,6 h2 v2 h-2 z M0,10 h2 v2 h-2 z M3,10 h1 v1 h-1 z M5,10 h3 v2 h-3 z M9,10 h2 v1 h-2 z M12,10 h4 v1 h-4 z M17,10 h3 v2 h-3 z M21,10 h2 v2 h-2 z M24,10 h2 v1 h-2 z M27,10 h1 v1 h-1 z M29,10 h4 v2 h-4 z M0,13 h1 v2 h-1 z M2,13 h2 v1 h-2 z M5,13 h1 v1 h-1 z M7,13 h3 v2 h-3 z M11,13 h2 v2 h-2 z M14,12 h1 v3 h-1 z M16,13 h2 v1 h-2 z M19,13 h1 v2 h-1 z M21,13 h3 v1 h-3 z M25,12 h2 v3 h-2 z M28,13 h1 v2 h-1 z M30,13 h3 v1 h-3 z M0,16 h2 v1 h-2 z M3,16 h3 v2 h-3 z M7,16 h1 v1 h-1 z M9,16 h2 v2 h-2 z M12,16 h3 v1 h-3 z M16,15 h1 v3 h-1 z M18,16 h2 v2 h-2 z M21,16 h1 v1 h-1 z M23,16 h2 v2 h-2 z M26,16 h2 v1 h-2 z M29,16 h1 v2 h-1 z M31,16 h2 v2 h-2 z M0,19 h3 v2 h-3 z M4,19 h2 v1 h-2 z M7,19 h1 v2 h-1 z M9,19 h3 v1 h-3 z M13,19 h2 v2 h-2 z M16,19 h1 v1 h-1 z M18,19 h3 v2 h-3 z M22,19 h2 v1 h-2 z M25,19 h1 v2 h-1 z M27,19 h3 v1 h-3 z M31,19 h2 v1 h-2 z M11,22 h2 v2 h-2 z M14,22 h1 v1 h-1 z M16,22 h3 v2 h-3 z M20,22 h2 v2 h-2 z M24,22 h2 v1 h-2 z M27,22 h1 v1 h-1 z M29,22 h4 v2 h-4 z M10,25 h3 v2 h-3 z M14,25 h1 v2 h-1 z M16,25 h2 v1 h-2 z M20,25 h2 v1 h-2 z M24,24 h2 v3 h-2 z M27,25 h1 v2 h-1 z M29,25 h2 v1 h-2 z M32,25 h1 v2 h-1 z M11,28 h2 v2 h-2 z M14,28 h4 v2 h-4 z M19,28 h2 v3 h-2 z M22,28 h1 v1 h-1 z M24,28 h3 v2 h-3 z M28,28 h2 v1 h-2 z M31,28 h2 v2 h-2 z M10,31 h3 v2 h-3 z M14,31 h1 v2 h-1 z M16,31 h2 v1 h-2 z M20,31 h2 v1 h-2 z M23,30 h2 v3 h-2 z M26,31 h2 v2 h-2 z M29,31 h1 v2 h-1 z M31,31 h2 v2 h-2 z"/>
+        </svg>
+      </div>
+      <div class="qr-content">
+        <div class="qr-instruction">Initiate Audit Scan</div>
+        <div class="qr-desc">View the autonomous telemetry engine in real-time.</div>
+        <a href="https://kuanta.agency" class="qr-link">kuanta.agency ↗</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ─── 3D PARALLAX / LIQUID MOVEMENT LOGIC ───
+  const flyer = document.getElementById('flyer');
+  const liquid = document.getElementById('liquid');
+
+  // Desktop Mouse Move
+  document.addEventListener('mousemove', (e) => {
+    // Only apply if it's not a touch device to avoid clunky mobile behavior
+    if (window.matchMedia("(pointer: fine)").matches) {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+      
+      // Rotate flyer slightly
+      flyer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+      
+      // Move liquid layer slightly in opposite direction for depth
+      liquid.style.transform = `translate(${xAxis * -2}px, ${yAxis * -2}px)`;
+    }
+  });
+
+  // Mobile Device Orientation (Gyroscope)
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', (e) => {
+      // Gamma is left-to-right tilt in degrees, where right is positive
+      // Beta is front-to-back tilt in degrees, where front is positive
+      const xAxis = e.gamma ? e.gamma / 5 : 0; 
+      const yAxis = e.beta ? (e.beta - 45) / 5 : 0; // Adjusting for holding phone at 45deg
+      
+      // Cap the rotation to keep it readable
+      const cappedX = Math.max(-10, Math.min(10, xAxis));
+      const cappedY = Math.max(-10, Math.min(10, yAxis));
+
+      flyer.style.transform = `rotateY(${cappedX}deg) rotateX(${-cappedY}deg)`;
+      liquid.style.transform = `translate(${cappedX * -2}px, ${-cappedY * -2}px)`;
+    });
+  }
+
+  // Reset on mouse leave
+  document.addEventListener('mouseleave', () => {
+    flyer.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    liquid.style.transform = `translate(0px, 0px)`;
+  });
+</script>
+
+</body>
+</html>
