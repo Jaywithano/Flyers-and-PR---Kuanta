@@ -1,418 +1,886 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Kuanta — Operations ERP Flyer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<title>Kuanta — Executive Telemetry Simulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root {
   --k: #0A0A0F;
   --k2: #111118;
+  --k3: #1A1A24;
   --acid: #C8FF00;
-  --acid-dim: rgba(200, 255, 0, 0.2);
-  --blue: #3A51F0;
+  --acid-dim: rgba(200,255,0,0.2);
   --text: #F0EEF8;
-  --muted: rgba(240, 238, 248, 0.6);
-  --rim: rgba(255, 255, 255, 0.1);
+  --muted: rgba(240,238,248,0.5);
+  --rim: rgba(255,255,255,0.08);
   --syne: 'Syne', sans-serif;
   --dm: 'DM Sans', sans-serif;
   --mono: 'JetBrains Mono', monospace;
+  --tajawal: 'Tajawal', sans-serif;
+}
+
+html[lang="ar"] {
+  direction: rtl;
 }
 
 body {
-  background-color: #050508; /* Darker outside the flyer */
+  background: var(--k);
   color: var(--text);
   font-family: var(--dm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  overflow: hidden;
-  padding: 20px;
-  perspective: 1000px;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Background grid for the overall page */
+html[lang="ar"] body {
+  font-family: var(--tajawal);
+}
+html[lang="ar"] h2 {
+  font-family: var(--tajawal);
+}
+
+/* Language Visibility Toggles */
+html[lang="ar"] .en { display: none !important; }
+html[lang="en"] .ar { display: none !important; }
+
+/* Background Noise Texture */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-  z-index: -1;
-}
-
-/* ─── A5 FLYER CONTAINER ─── */
-/* A5 Ratio is 1 : 1.414 */
-.flyer-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 460px;
-  aspect-ratio: 1 / 1.414;
-  background: var(--k);
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05);
-  transform-style: preserve-3d;
-  transition: transform 0.1s ease-out;
-}
-
-/* Noise overlay inside flyer */
-.flyer-wrapper::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* ─── LIQUID ANIMATION BACKGROUND ─── */
-.liquid-bg {
-  position: absolute;
-  inset: -20%;
   z-index: 0;
-  filter: blur(60px);
-  opacity: 0.7;
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  animation: floatOrb 12s infinite ease-in-out alternate;
-}
-
-.orb-1 {
-  width: 350px; height: 350px;
-  background: var(--acid);
-  top: 10%; left: -10%;
-  animation-delay: 0s;
-}
-
-.orb-2 {
-  width: 400px; height: 400px;
-  background: rgba(58, 81, 240, 0.8); /* Deep tech blue to contrast acid */
-  bottom: 0%; right: -20%;
-  animation-delay: -4s;
-}
-
-.orb-3 {
-  width: 250px; height: 250px;
-  background: var(--acid2);
-  top: 40%; left: 30%;
-  animation-delay: -8s;
-}
-
-@keyframes floatOrb {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -50px) scale(1.1); }
-  100% { transform: translate(-40px, 20px) scale(0.9); }
-}
-
-/* ─── FLYER CONTENT ─── */
-.content-layer {
-  position: relative;
-  z-index: 5;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 8% 6%;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
 /* Header */
-.flyer-header {
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 20px 5%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: auto; /* Pushes middle content down */
+  align-items: center;
+  z-index: 100;
+  background: linear-gradient(180deg, rgba(10,10,15,0.9) 0%, rgba(10,10,15,0) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.logo-svg {
-  height: 20px;
-  color: #fff;
-}
-
-.system-status {
-  font-family: var(--mono);
-  font-size: 8px;
-  color: var(--acid);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.header-right {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(10,10,15,0.5);
-  padding: 6px 10px;
-  border: 1px solid var(--acid-dim);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-}
-.system-status::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--acid);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--acid);
-  animation: pulse 2s infinite;
+  gap: 15px;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; box-shadow: 0 0 12px var(--acid); }
-}
-
-/* Middle / Glassmorphism Panel */
-.glass-panel {
-  background: rgba(17, 17, 24, 0.4);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+.lang-switch {
+  background: transparent;
   border: 1px solid var(--rim);
-  border-top: 1px solid rgba(200, 255, 0, 0.3);
-  border-radius: 16px;
-  padding: 30px;
-  margin-bottom: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-panel::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--acid), transparent);
-  opacity: 0.5;
-}
-
-.eyebrow {
+  color: var(--muted);
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.lang-switch:hover {
   color: var(--acid);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
+  border-color: var(--acid);
+}
+
+.live-indicator {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--acid);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-.eyebrow::before {
+
+.dot {
+  width: 8px; height: 8px;
+  background: var(--acid);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--acid);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+/* Layout */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 100px 20px 60px;
+}
+
+.module {
+  margin-bottom: 120px;
+  opacity: 0.2;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.module.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.phase-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--acid);
+  letter-spacing: 0.15em;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.phase-label::before {
   content: '';
-  width: 16px; height: 1px;
+  width: 20px; height: 1px;
   background: var(--acid);
 }
 
-.title {
-  font-family: var(--syne);
-  font-size: clamp(28px, 8cqw, 42px);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin-bottom: 16px;
-  color: #fff;
+html[lang="ar"] .phase-label {
+  font-family: var(--tajawal);
+  font-weight: 700;
+  letter-spacing: normal;
 }
-.title em {
+
+h2 {
+  font-family: var(--syne);
+  font-size: clamp(32px, 8vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 15px;
+}
+h2 em {
   font-style: normal;
   color: var(--acid);
 }
-
-.subtitle {
-  font-size: clamp(13px, 3.5cqw, 15px);
+p {
   color: var(--muted);
-  line-height: 1.6;
+  font-size: 16px;
+  margin-bottom: 30px;
 }
 
-/* Bottom / QR Section */
-.qr-section {
-  display: flex;
-  align-items: stretch;
-  gap: 15px;
-  background: rgba(10, 10, 15, 0.6);
-  backdrop-filter: blur(20px);
+/* Visualization Containers */
+.viz-box {
+  background: var(--k2);
   border: 1px solid var(--rim);
   border-radius: 12px;
-  padding: 15px;
-}
-
-.qr-code-box {
-  width: 90px;
-  height: 90px;
-  background: #fff;
-  border-radius: 8px;
-  padding: 6px;
-  flex-shrink: 0;
-  box-shadow: 0 0 20px rgba(200, 255, 0, 0.1);
-  border: 2px solid var(--acid);
+  padding: 20px;
+  height: 280px;
   position: relative;
-}
-
-/* A highly accurate CSS representation of a QR code */
-.qr-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.qr-content {
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
-.qr-instruction {
+.viz-header {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--rim);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+html[lang="ar"] .viz-header {
+  font-family: var(--tajawal);
+  letter-spacing: normal;
+}
+
+/* Module 1: Ingestion (Terminal) */
+.terminal-window {
+  flex-grow: 1;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  overflow: hidden;
+  position: relative;
+  direction: ltr; /* keep terminal ltr even in Arabic */
+  text-align: left;
+}
+.log-line {
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateY(10px);
+}
+.log-line.show {
+  animation: logUp 0.3s forwards;
+}
+.log-line .acid { color: var(--acid); }
+.log-line .blue { color: var(--blue); }
+@keyframes logUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Module 2: Processing (Grid) */
+.processing-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  flex-grow: 1;
+}
+.node {
+  background: var(--k3);
+  border: 1px solid var(--rim);
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.node.active {
+  background: var(--acid-dim);
+  border-color: var(--acid);
+  box-shadow: 0 0 15px var(--acid-dim);
+}
+
+/* Module 3: Telemetry (Chart) */
+.chart-container {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+.chart-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.chart-line {
+  fill: none;
+  stroke: var(--acid);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 2s ease-out;
+}
+.module.active .chart-line {
+  stroke-dashoffset: 0;
+}
+.chart-glow {
+  fill: url(#glowGradient);
+  opacity: 0;
+  transition: opacity 2s ease-out;
+}
+.module.active .chart-glow {
+  opacity: 1;
+}
+.chart-label {
+  position: absolute;
+  top: 20px; left: 20px;
+  font-family: var(--syne);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+}
+html[lang="ar"] .chart-label {
+  right: 20px; left: auto;
+  font-family: var(--tajawal);
+}
+.chart-label span {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--acid);
+  display: block;
+  font-weight: 700;
+}
+html[lang="ar"] .chart-label span {
+  font-family: var(--tajawal);
+}
+
+/* Pricing Grid */
+.pricing-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.price-card {
+  background: var(--k2);
+  border: 1px solid var(--rim);
+  border-radius: 12px;
+  padding: 30px;
+  position: relative;
+}
+.price-card.featured {
+  border-color: var(--acid);
+  background: linear-gradient(180deg, rgba(200,255,0,.03) 0%, var(--k2) 100%);
+}
+.price-card.featured::before {
+  content: 'FLAGSHIP';
+  position: absolute;
+  top: 20px; right: 20px;
   font-family: var(--mono);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--acid);
-  text-transform: uppercase;
-  margin-bottom: 6px;
+  letter-spacing: .1em;
+  color: var(--k);
+  background: var(--acid);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+html[lang="ar"] .price-card.featured::before {
+  content: 'الأبرز';
+  right: auto; left: 20px;
+  font-family: var(--tajawal);
+  letter-spacing: 0;
 }
 
-.qr-desc {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.4;
-  margin-bottom: auto;
-}
-
-.qr-link {
+.price-tier {
   font-family: var(--mono);
-  font-size: 11px;
-  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--acid);
+  margin-bottom: 10px;
+}
+html[lang="ar"] .price-tier { font-family: var(--tajawal); letter-spacing: 0; }
+.price-amount {
+  font-family: var(--syne);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.price-period {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+.price-desc {
+  font-size: 14px;
+  color: var(--muted2);
+  line-height: 1.6;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--rim);
+}
+.price-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.price-feature {
+  font-size: 13px;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.price-feature::before {
+  content: '✓';
+  color: var(--acid);
+  font-family: var(--mono);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* CTA */
+.cta-box {
+  background: linear-gradient(180deg, var(--k2) 0%, rgba(200,255,0,0.05) 100%);
+  border: 1px solid var(--acid-dim);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+}
+.btn-primary {
+  background: var(--acid);
+  color: #0A0A0F;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 18px 32px;
+  border-radius: 4px;
   text-decoration: none;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all .25s;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+}
+html[lang="ar"] .btn-primary { font-family: var(--tajawal); letter-spacing: 0; }
+.btn-primary:hover {
+  background: var(--acid2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(200,255,0,.2);
+}
+.btn-ghost {
+  border: 1px solid var(--rim);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all .25s;
+  width: 100%;
+}
+html[lang="ar"] .btn-ghost { font-family: var(--tajawal); letter-spacing: 0; }
+.btn-ghost:hover {
+  border-color: var(--rim2);
+  color: var(--acid);
 }
 
-/* Corner Accents */
-.corner {
-  position: absolute;
-  width: 10px; height: 10px;
-  border-style: solid;
-  border-color: var(--acid-dim);
-  border-width: 0;
+.scroll-prompt {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
-.c-tl { top: 15px; left: 15px; border-top-width: 1px; border-left-width: 1px; }
-.c-tr { top: 15px; right: 15px; border-top-width: 1px; border-right-width: 1px; }
-.c-bl { bottom: 15px; left: 15px; border-bottom-width: 1px; border-left-width: 1px; }
-.c-br { bottom: 15px; right: 15px; border-bottom-width: 1px; border-right-width: 1px; }
-
-/* Responsive adjustments for extremely small screens */
-@media (max-width: 400px) {
-  .flyer-wrapper { border-radius: 0; aspect-ratio: auto; height: 100vh; }
-  .content-layer { padding: 12% 8%; }
-  .qr-section { flex-direction: column; align-items: center; text-align: center; }
+html[lang="ar"] .scroll-prompt { font-family: var(--tajawal); letter-spacing: 0; }
+.scroll-prompt.hide { opacity: 0; pointer-events: none; }
+.scroll-prompt::after {
+  content: '↓';
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
 }
 </style>
 </head>
 <body>
 
-<div class="flyer-wrapper" id="flyer">
-  
-  <!-- Corner Accents -->
-  <div class="corner c-tl"></div>
-  <div class="corner c-tr"></div>
-  <div class="corner c-bl"></div>
-  <div class="corner c-br"></div>
+<header>
+  <svg viewBox="0 0 339.06 85.01" xmlns="http://www.w3.org/2000/svg" style="height:24px;width:auto;color:#fff;">
+    <rect fill="currentColor" x="33.2" y="25.57" width="5.1" height="38.76"/>
+    <path fill="currentColor" d="M52.9,51.94c0,1.81.27,3.55.78,5.19,2.13,6.85,9.38,13.06,16.86,12.2,3.58-.41,6.52-2.78,6.52-6.58,0-.1,0-.2,0-.3-.16-3.55-3.09-6.38-6.67-6.38s-6.52,2.83-6.67,6.38c-3.47-2.21-5.78-6.1-5.78-10.51v-9.16h-5.04v9.16Z"/>
+    <polygon fill="currentColor" points="71.96 25.57 46.56 64.33 33.2 64.33 58.59 25.57 71.96 25.57"/>
+    <path fill="currentColor" d="M121.32,25.57v26.58c0,6.73-5.46,12.19-12.19,12.19h-14.39c-6.73,0-12.19-5.46-12.19-12.19v-26.58h5.1v17.28c0,4.49,3.64,8.12,8.12,8.12h12.3c4.49,0,8.12-3.64,8.12-8.12v-17.28h5.1Z"/>
+    <path fill="currentColor" d="M131.92,62.16v-26.58c0-6.73,5.46-12.19,12.19-12.19h14.39c6.73,0,12.19,5.46,12.19,12.19v26.58h-5.1v-17.28c0-4.49-3.64-8.12-8.12-8.12h-12.3c-4.49,0-8.12,3.64-8.12,8.12v17.28h-5.1Z"/>
+    <circle fill="#C8FF00" cx="151.3" cy="55.48" r="6.68"/>
+    <g fill="currentColor"><rect x="181.29" y="23.4" width="5.1" height="38.76"/><rect x="214.94" y="23.4" width="5.1" height="38.76"/><polygon points="181.29 23.4 206.68 62.16 220.04 62.16 194.65 23.4 181.29 23.4"/></g>
+    <g fill="currentColor"><rect x="247.48" y="23.4" width="5.1" height="38.76"/><rect x="230.65" y="23.4" width="38.76" height="13.36"/></g>
+    <path fill="#C8FF00" d="M305.25,55.48c0,3.69-2.99,6.68-6.68,6.68s-6.68-2.99-6.68-6.68,2.99-6.68,6.68-6.68,6.68,2.99,6.68,6.68Z"/>
+    <path fill="currentColor" d="M279.19,62.16v-26.58c0-6.73,5.46-12.19,12.19-12.19h14.39c6.73,0,12.19,5.46,12.19,12.19v26.58h-5.1v-17.28c0-4.49-3.64-8.12-8.12-8.12h-12.3c-4.49,0-8.12,3.64-8.12,8.12v17.28h-5.1Z"/>
+  </svg>
+  <div class="header-right">
+    <div class="live-indicator">
+      <div class="dot"></div>
+      <span class="en">SYSTEM LIVE</span>
+      <span class="ar">النظام نشط</span>
+    </div>
+    <button id="langToggle" class="lang-switch">AR</button>
+  </div>
+</header>
 
-  <!-- Liquid Animated Background -->
-  <div class="liquid-bg" id="liquid">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+<div class="scroll-prompt" id="scrollPrompt">
+  <span class="en">Scroll to initialize</span>
+  <span class="ar">مرر للبدء</span>
+</div>
+
+<div class="container">
+  
+  <!-- INTRO -->
+  <div class="module active" style="min-height: 70vh; display: flex; flex-direction: column; justify-content: center; margin-bottom: 60px;">
+    <div class="phase-label">
+      <span class="en">OPERATIONAL AUDIT</span>
+      <span class="ar">تدقيق تشغيلي</span>
+    </div>
+    <h2>
+      <span class="en">Your Business.<br><em>Algorithmically Engineered.</em></span>
+      <span class="ar">عملك.<br><em>مُهندَس خوارزمياً.</em></span>
+    </h2>
+    <p>
+      <span class="en">Founders cap out when they manage broken systems. Scroll down to visualize the Kuanta Autonomous Engine architecture in real-time.</span>
+      <span class="ar">يصل المؤسسون إلى أقصى طاقاتهم عندما يديرون أنظمة معطلة. مرر لأسفل لتصور بنية محرك كوانتا المستقل في الوقت الفعلي.</span>
+    </p>
   </div>
 
-  <!-- Content Layer -->
-  <div class="content-layer">
+  <!-- PHASE 1 -->
+  <div class="module js-module" id="mod1">
+    <div class="phase-label">
+      <span class="en">PHASE 01: ACQUISITION</span>
+      <span class="ar">المرحلة ٠١: الاستحواذ</span>
+    </div>
+    <h2>
+      <span class="en">Data <em>Ingestion</em></span>
+      <span class="ar">استيعاب <em>البيانات</em></span>
+    </h2>
+    <p>
+      <span class="en">Raw behavioral data, lead submissions, and ad interactions are instantly captured via secure webhooks from every digital touchpoint.</span>
+      <span class="ar">يتم التقاط البيانات السلوكية الخام، ونماذج العملاء المحتملين، والتفاعلات الإعلانية فورياً عبر خطافات ويب آمنة من كل نقطة اتصال رقمية.</span>
+    </p>
     
-    <!-- Top Header -->
-    <div class="flyer-header">
-      <svg class="logo-svg" viewBox="0 0 339.06 85.01" xmlns="http://www.w3.org/2000/svg">
-        <rect fill="currentColor" x="33.2" y="25.57" width="5.1" height="38.76"/>
-        <path fill="currentColor" d="M52.9,51.94c0,1.81.27,3.55.78,5.19,2.13,6.85,9.38,13.06,16.86,12.2,3.58-.41,6.52-2.78,6.52-6.58,0-.1,0-.2,0-.3-.16-3.55-3.09-6.38-6.67-6.38s-6.52,2.83-6.67,6.38c-3.47-2.21-5.78-6.1-5.78-10.51v-9.16h-5.04v9.16Z"/>
-        <polygon fill="currentColor" points="71.96 25.57 46.56 64.33 33.2 64.33 58.59 25.57 71.96 25.57"/>
-        <path fill="currentColor" d="M121.32,25.57v26.58c0,6.73-5.46,12.19-12.19,12.19h-14.39c-6.73,0-12.19-5.46-12.19-12.19v-26.58h5.1v17.28c0,4.49,3.64,8.12,8.12,8.12h12.3c4.49,0,8.12-3.64,8.12-8.12v-17.28h5.1Z"/>
-        <path fill="currentColor" d="M131.92,62.16v-26.58c0-6.73,5.46-12.19,12.19-12.19h14.39c6.73,0,12.19,5.46,12.19,12.19v26.58h-5.1v-17.28c0-4.49-3.64-8.12-8.12-8.12h-12.3c-4.49,0-8.12,3.64-8.12,8.12v17.28h-5.1Z"/>
-        <circle fill="#C8FF00" cx="151.3" cy="55.48" r="6.68"/>
-        <g fill="currentColor"><rect x="181.29" y="23.4" width="5.1" height="38.76"/><rect x="214.94" y="23.4" width="5.1" height="38.76"/><polygon points="181.29 23.4 206.68 62.16 220.04 62.16 194.65 23.4 181.29 23.4"/></g>
-        <g fill="currentColor"><rect x="247.48" y="23.4" width="5.1" height="38.76"/><rect x="230.65" y="23.4" width="38.76" height="13.36"/></g>
-        <path fill="#C8FF00" d="M305.25,55.48c0,3.69-2.99,6.68-6.68,6.68s-6.68-2.99-6.68-6.68,2.99-6.68,6.68-6.68,6.68,2.99,6.68,6.68Z"/>
-        <path fill="currentColor" d="M279.19,62.16v-26.58c0-6.73,5.46-12.19,12.19-12.19h14.39c6.73,0,12.19,5.46,12.19,12.19v26.58h-5.1v-17.28c0-4.49-3.64-8.12-8.12-8.12h-12.3c-4.49,0-8.12,3.64-8.12,8.12v17.28h-5.1Z"/>
-      </svg>
-      <div class="system-status">SYS_LIVE</div>
+    <div class="viz-box">
+      <div class="viz-header">
+        <span>WEBHOOK_LISTENER_ACTIVE</span>
+        <span style="color:var(--acid);">[CONNECTED]</span>
+      </div>
+      <div class="terminal-window" id="terminal">
+        <!-- JS fills this -->
+      </div>
     </div>
+  </div>
 
-    <!-- Main Value Prop -->
-    <div class="glass-panel">
-      <div class="eyebrow">FRACTIONAL OPERATIONS</div>
-      <h1 class="title">Scale without<br>the <em>chaos.</em></h1>
-      <p class="subtitle">We build the autonomous cloud infrastructure, AI routing protocols, and telemetry grids mid-market brands use to eliminate management overhead and accelerate revenue.</p>
+  <!-- PHASE 2 -->
+  <div class="module js-module" id="mod2">
+    <div class="phase-label">
+      <span class="en">PHASE 02: OPERATIONS</span>
+      <span class="ar">المرحلة ٠٢: العمليات</span>
     </div>
+    <h2>
+      <span class="en">Cognitive <em>Routing</em></span>
+      <span class="ar">التوجيه <em>المعرفي</em></span>
+    </h2>
+    <p>
+      <span class="en">Custom Large Language Models (AI) instantly qualify, score, and route the ingested leads to your sales teams in milliseconds.</span>
+      <span class="ar">نماذج ذكاء اصطناعي لغوية مخصصة تقوم بتأهيل وتقييم وتوجيه العملاء المحتملين إلى فرق المبيعات الخاصة بك في أجزاء من الثانية.</span>
+    </p>
+    
+    <div class="viz-box">
+      <div class="viz-header">
+        <span>LLM_PROCESSING_MATRIX</span>
+        <span style="color:var(--acid);">[OPTIMIZING]</span>
+      </div>
+      <div class="processing-grid" id="grid">
+        <!-- JS fills this -->
+      </div>
+    </div>
+  </div>
 
-    <!-- QR Code Section -->
-    <div class="qr-section">
-      <div class="qr-code-box">
-        <!-- SVG Placeholder for QR Code. Replace this SVG with your actual exported QR code pointing to kuanta.agency/engine.html -->
-        <svg class="qr-svg" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#0A0A0F" d="M0,0 h9 v9 h-9 z M2,2 h5 v5 h-5 z M3,3 h3 v3 h-3 z M24,0 h9 v9 h-9 z M26,2 h5 v5 h-5 z M27,3 h3 v3 h-3 z M0,24 h9 v9 h-9 z M2,26 h5 v5 h-5 z M3,27 h3 v3 h-3 z M11,0 h2 v2 h-2 z M14,0 h4 v2 h-4 z M19,0 h2 v3 h-2 z M10,3 h3 v2 h-3 z M14,3 h1 v2 h-1 z M16,3 h2 v1 h-2 z M20,4 h2 v1 h-2 z M11,6 h2 v2 h-2 z M14,6 h1 v1 h-1 z M16,6 h3 v2 h-3 z M20,6 h2 v2 h-2 z M0,10 h2 v2 h-2 z M3,10 h1 v1 h-1 z M5,10 h3 v2 h-3 z M9,10 h2 v1 h-2 z M12,10 h4 v1 h-4 z M17,10 h3 v2 h-3 z M21,10 h2 v2 h-2 z M24,10 h2 v1 h-2 z M27,10 h1 v1 h-1 z M29,10 h4 v2 h-4 z M0,13 h1 v2 h-1 z M2,13 h2 v1 h-2 z M5,13 h1 v1 h-1 z M7,13 h3 v2 h-3 z M11,13 h2 v2 h-2 z M14,12 h1 v3 h-1 z M16,13 h2 v1 h-2 z M19,13 h1 v2 h-1 z M21,13 h3 v1 h-3 z M25,12 h2 v3 h-2 z M28,13 h1 v2 h-1 z M30,13 h3 v1 h-3 z M0,16 h2 v1 h-2 z M3,16 h3 v2 h-3 z M7,16 h1 v1 h-1 z M9,16 h2 v2 h-2 z M12,16 h3 v1 h-3 z M16,15 h1 v3 h-1 z M18,16 h2 v2 h-2 z M21,16 h1 v1 h-1 z M23,16 h2 v2 h-2 z M26,16 h2 v1 h-2 z M29,16 h1 v2 h-1 z M31,16 h2 v2 h-2 z M0,19 h3 v2 h-3 z M4,19 h2 v1 h-2 z M7,19 h1 v2 h-1 z M9,19 h3 v1 h-3 z M13,19 h2 v2 h-2 z M16,19 h1 v1 h-1 z M18,19 h3 v2 h-3 z M22,19 h2 v1 h-2 z M25,19 h1 v2 h-1 z M27,19 h3 v1 h-3 z M31,19 h2 v1 h-2 z M11,22 h2 v2 h-2 z M14,22 h1 v1 h-1 z M16,22 h3 v2 h-3 z M20,22 h2 v2 h-2 z M24,22 h2 v1 h-2 z M27,22 h1 v1 h-1 z M29,22 h4 v2 h-4 z M10,25 h3 v2 h-3 z M14,25 h1 v2 h-1 z M16,25 h2 v1 h-2 z M20,25 h2 v1 h-2 z M24,24 h2 v3 h-2 z M27,25 h1 v2 h-1 z M29,25 h2 v1 h-2 z M32,25 h1 v2 h-1 z M11,28 h2 v2 h-2 z M14,28 h4 v2 h-4 z M19,28 h2 v3 h-2 z M22,28 h1 v1 h-1 z M24,28 h3 v2 h-3 z M28,28 h2 v1 h-2 z M31,28 h2 v2 h-2 z M10,31 h3 v2 h-3 z M14,31 h1 v2 h-1 z M16,31 h2 v1 h-2 z M20,31 h2 v1 h-2 z M23,30 h2 v3 h-2 z M26,31 h2 v2 h-2 z M29,31 h1 v2 h-1 z M31,31 h2 v2 h-2 z"/>
+  <!-- PHASE 3 -->
+  <div class="module js-module" id="mod3">
+    <div class="phase-label">
+      <span class="en">PHASE 03: INFRASTRUCTURE</span>
+      <span class="ar">المرحلة ٠٣: البنية التحتية</span>
+    </div>
+    <h2>
+      <span class="en">Executive <em>Telemetry</em></span>
+      <span class="ar">القياس عن بعد <em>للتنفيذيين</em></span>
+    </h2>
+    <p>
+      <span class="en">Absolute operational clarity. You step away from the daily chaos and focus entirely on the top-level net metrics.</span>
+      <span class="ar">وضوح تشغيلي مطلق. ابتعد عن الفوضى اليومية وركز كلياً على المقاييس النهائية والأرباح الصافية.</span>
+    </p>
+    
+    <div class="viz-box" style="padding: 0;">
+      <div class="viz-header" style="margin: 20px 20px 0; border: none;">
+        <span>Q3_NET_REVENUE_TREND</span>
+        <span style="color:var(--acid);">[LIVE SYNC]</span>
+      </div>
+      <div class="chart-container">
+        <div class="chart-label">
+          <span class="en">PROJECTED ROAS</span>
+          <span class="ar">العائد المتوقع للإعلانات</span>
+          4.8x
+        </div>
+        <svg class="chart-svg" viewBox="0 0 500 200" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="glowGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(200,255,0,0.3)"/>
+              <stop offset="100%" stop-color="rgba(200,255,0,0)"/>
+            </linearGradient>
+          </defs>
+          <path class="chart-glow" d="M0,200 L0,150 Q100,160 150,110 T300,80 T400,40 L500,20 L500,200 Z" />
+          <path class="chart-line" d="M0,150 Q100,160 150,110 T300,80 T400,40 L500,20" />
         </svg>
       </div>
-      <div class="qr-content">
-        <div class="qr-instruction">Initiate Audit Scan</div>
-        <div class="qr-desc">View the autonomous telemetry engine in real-time.</div>
-        <a href="https://kuanta.agency" class="qr-link">kuanta.agency ↗</a>
+    </div>
+  </div>
+
+  <!-- NEW MODULE: PRICING -->
+  <div class="module js-module" id="mod_pricing">
+    <div class="phase-label">
+      <span class="en">INVESTMENT TIERS</span>
+      <span class="ar">باقات الاستثمار</span>
+    </div>
+    <h2>
+      <span class="en">Architecture <em>Scale.</em></span>
+      <span class="ar">هندسة <em>تتوسع.</em></span>
+    </h2>
+    <p>
+      <span class="en">Deploy tailored infrastructure grids built specifically to generate sales and automate back-office operations.</span>
+      <span class="ar">انشر شبكات بنية تحتية مخصصة مصممة خصيصًا لتوليد المبيعات وأتمتة العمليات الخلفية بالكامل.</span>
+    </p>
+
+    <div class="pricing-grid">
+      <!-- Tier 1 -->
+      <div class="price-card">
+        <div class="price-tier">
+          <span class="en">Core Infrastructure</span>
+          <span class="ar">البنية التحتية الأساسية</span>
+        </div>
+        <div class="price-amount">$800</div>
+        <div class="price-period">
+          <span class="en">starting per deployment</span>
+          <span class="ar">ابتداءً لكل نشر وتجهيز</span>
+        </div>
+        <div class="price-desc">
+          <span class="en">For growth-stage brands requiring structured data logging, core web deployment, and modern attribution loops to stop losing leads.</span>
+          <span class="ar">للعلامات التجارية في مرحلة النمو التي تتطلب تسجيلاً هيكلياً للبيانات ونشر مواقع الويب لتجنب فقدان أي عميل محتمل.</span>
+        </div>
+        <div class="price-features">
+          <div class="price-feature">
+            <span class="en">Web Architecture & Deployment</span>
+            <span class="ar">هندسة الويب والنشر السحابي</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Marketing Operations Framework</span>
+            <span class="ar">هيكلة عمليات التسويق</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Basic API Routing & Data Centralization</span>
+            <span class="ar">توجيه الواجهات البرمجية والبيانات</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Standard Form / Webhook Ingestion</span>
+            <span class="ar">استقبال النماذج وخطافات الويب الأساسية</span>
+          </div>
+        </div>
+        <a href="https://wa.me/96171740527" target="_blank" class="btn-ghost" style="margin-top:20px;">
+          <span class="en">Get Started</span><span class="ar">ابدأ الآن</span>
+        </a>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="price-card featured">
+        <div class="price-tier">
+          <span class="en">Autonomous Engine</span>
+          <span class="ar">المحرك المستقل</span>
+        </div>
+        <div class="price-amount">$1,500</div>
+        <div class="price-period">
+          <span class="en">per deployment</span>
+          <span class="ar">لكل نشر وتجهيز</span>
+        </div>
+        <div class="price-desc">
+          <span class="en">Our flagship overhaul. For established entities looking to fully automate their media acquisition and integrate executive telemetry.</span>
+          <span class="ar">إصلاحنا الشامل الأبرز. للكيانات الراسخة التي تتطلع لأتمتة الاستحواذ على المبيعات بالكامل ودمج القياس التنفيذي.</span>
+        </div>
+        <div class="price-features">
+          <div class="price-feature">
+            <span class="en">Cloud Infrastructure Scalability</span>
+            <span class="ar">توسيع البنية التحتية السحابية</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Advanced Algorithmic Media Architecture</span>
+            <span class="ar">هندسة الوسائط الخوارزمية المتقدمة</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Cognitive AI Pipeline Integration</span>
+            <span class="ar">دمج مسار الذكاء الاصطناعي المعرفي</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Automated Lead Qualification & Scoring</span>
+            <span class="ar">تقييم وتأهيل العملاء المحتملين آلياً</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Multi-Channel Data Synchronization</span>
+            <span class="ar">مزامنة البيانات عبر القنوات المتعددة</span>
+          </div>
+        </div>
+        <a href="https://wa.me/96171740527" target="_blank" class="btn-primary" style="margin-top:20px;">
+          <span class="en">Deploy Systems</span><span class="ar">أنشر الأنظمة</span>
+        </a>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="price-card">
+        <div class="price-tier">
+          <span class="en">Enterprise Architecture</span>
+          <span class="ar">بنية الشركات الكبرى</span>
+        </div>
+        <div class="price-amount" style="font-size: 30px;">
+          <span class="en">Custom</span><span class="ar">مخصص</span>
+        </div>
+        <div class="price-period">
+          <span class="en">tailored setup</span>
+          <span class="ar">تجهيز مفصل بالكامل</span>
+        </div>
+        <div class="price-desc">
+          <span class="en">For larger conglomerates and holding networks requiring broad, cross-brand telemetry infrastructure and bespoke AI training.</span>
+          <span class="ar">للتكتلات الكبيرة التي تتطلب بنية تحتية واسعة للقياس عن بعد عبر العلامات التجارية وتدريب مخصص للذكاء الاصطناعي.</span>
+        </div>
+        <div class="price-features">
+          <div class="price-feature">
+            <span class="en">Dedicated Account Management</span>
+            <span class="ar">إدارة حسابات مخصصة وشاملة</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Up to 10+ operational spoke grids</span>
+            <span class="ar">ما يصل إلى ١٠+ شبكات فرعية تشغيلية</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Dedicated enterprise cloud workspace</span>
+            <span class="ar">مساحة عمل سحابية مخصصة للشركات</span>
+          </div>
+          <div class="price-feature">
+            <span class="en">Customized proprietary LLM configurations</span>
+            <span class="ar">تكوينات نماذج لغوية (AI) حصرية</span>
+          </div>
+        </div>
+        <a href="https://wa.me/96171740527" target="_blank" class="btn-ghost" style="margin-top:20px;">
+          <span class="en">Let's Talk</span><span class="ar">تواصل معنا</span>
+        </a>
       </div>
     </div>
-
   </div>
+
+  <!-- CTA -->
+  <div class="module js-module cta-box" id="mod4">
+    <h2>
+      <span class="en">Ready for a<br><em>Growth Partnership?</em></span>
+      <span class="ar">هل أنت جاهز<br><em>لشراكة نمو حقيقية؟</em></span>
+    </h2>
+    <p style="margin: 15px 0 25px;">
+      <span class="en">Stop consulting. Start integrating. Let Kuanta act as your fractional operations arm.</span>
+      <span class="ar">توقف عن الاستشارات وابدأ في الدمج. اجعل كوانتا ذراعك التشغيلي المتكامل.</span>
+    </p>
+    <a href="https://wa.me/96171740527" target="_blank" class="btn-primary">
+      <span class="en">Apply for Partnership →</span>
+      <span class="ar">قدم طلب الشراكة ←</span>
+    </a>
+    <a href="https://www.kuanta.agency" style="display:block; margin-top:20px; color:var(--muted); font-family:var(--mono); font-size:11px; text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">
+      <span class="en">Return to Main Site</span>
+      <span class="ar" style="font-family: var(--tajawal);">العودة للموقع الرئيسي</span>
+    </a>
+  </div>
+
 </div>
 
 <script>
-  // ─── 3D PARALLAX / LIQUID MOVEMENT LOGIC ───
-  const flyer = document.getElementById('flyer');
-  const liquid = document.getElementById('liquid');
+// --- Language Toggle Logic ---
+const langToggle = document.getElementById('langToggle');
+const htmlEl = document.documentElement;
 
-  // Desktop Mouse Move
-  document.addEventListener('mousemove', (e) => {
-    // Only apply if it's not a touch device to avoid clunky mobile behavior
-    if (window.matchMedia("(pointer: fine)").matches) {
-      const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-      const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+langToggle.addEventListener('click', () => {
+  if (htmlEl.getAttribute('lang') === 'en') {
+    htmlEl.setAttribute('lang', 'ar');
+    langToggle.textContent = 'EN';
+  } else {
+    htmlEl.setAttribute('lang', 'en');
+    langToggle.textContent = 'AR';
+  }
+});
+
+// --- Observer for Scroll Animations ---
+const modules = document.querySelectorAll('.js-module');
+const scrollPrompt = document.getElementById('scrollPrompt');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      scrollPrompt.classList.add('hide'); // Hide prompt once scrolling starts
       
-      // Rotate flyer slightly
-      flyer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-      
-      // Move liquid layer slightly in opposite direction for depth
-      liquid.style.transform = `translate(${xAxis * -2}px, ${yAxis * -2}px)`;
+      // Trigger specific JS animations based on ID
+      if(entry.target.id === 'mod1' && !window.mod1Started) {
+        startTerminal();
+        window.mod1Started = true;
+      }
+      if(entry.target.id === 'mod2' && !window.mod2Started) {
+        startGrid();
+        window.mod2Started = true;
+      }
     }
   });
+}, { threshold: 0.3 });
 
-  // Mobile Device Orientation (Gyroscope)
-  if (window.DeviceOrientationEvent) {
-    window.addEventListener('deviceorientation', (e) => {
-      // Gamma is left-to-right tilt in degrees, where right is positive
-      // Beta is front-to-back tilt in degrees, where front is positive
-      const xAxis = e.gamma ? e.gamma / 5 : 0; 
-      const yAxis = e.beta ? (e.beta - 45) / 5 : 0; // Adjusting for holding phone at 45deg
-      
-      // Cap the rotation to keep it readable
-      const cappedX = Math.max(-10, Math.min(10, xAxis));
-      const cappedY = Math.max(-10, Math.min(10, yAxis));
+modules.forEach(mod => observer.observe(mod));
 
-      flyer.style.transform = `rotateY(${cappedX}deg) rotateX(${-cappedY}deg)`;
-      liquid.style.transform = `translate(${cappedX * -2}px, ${-cappedY * -2}px)`;
-    });
-  }
+// --- Terminal Logic (Phase 1) ---
+const terminalLogs = [
+  "POST /webhook/fb_lead HTTP/2.0 <span class='acid'>200 OK</span>",
+  "Extracting payload: <span class='blue'>{id: '92837'}</span>",
+  "Parsing fields: Name, Email, Context...",
+  "Running data normalization protocol...",
+  "Status: <span class='acid'>CLEAN</span>. Forwarding to AI Router...",
+  "POST /api/v1/ingest -> SUCCESS",
+  "Awaiting next payload..."
+];
+const terminalEl = document.getElementById('terminal');
 
-  // Reset on mouse leave
-  document.addEventListener('mouseleave', () => {
-    flyer.style.transform = `rotateY(0deg) rotateX(0deg)`;
-    liquid.style.transform = `translate(0px, 0px)`;
-  });
+function startTerminal() {
+  let i = 0;
+  setInterval(() => {
+    const p = document.createElement('div');
+    p.className = 'log-line';
+    p.innerHTML = `> ${terminalLogs[i % terminalLogs.length]}`;
+    terminalEl.appendChild(p);
+    
+    // Trigger reflow for animation
+    void p.offsetWidth;
+    p.classList.add('show');
+    
+    // Keep only last 8 lines
+    if(terminalEl.children.length > 8) {
+      terminalEl.removeChild(terminalEl.firstChild);
+    }
+    i++;
+  }, 800);
+}
+
+// --- Grid Logic (Phase 2) ---
+const gridEl = document.getElementById('grid');
+// Create 24 nodes
+for(let i=0; i<24; i++) {
+  const node = document.createElement('div');
+  node.className = 'node';
+  gridEl.appendChild(node);
+}
+const nodes = document.querySelectorAll('.node');
+
+function startGrid() {
+  setInterval(() => {
+    // Turn off all
+    nodes.forEach(n => n.classList.remove('active'));
+    // Turn on 3-6 random nodes
+    const numToActivate = Math.floor(Math.random() * 4) + 3;
+    for(let i=0; i<numToActivate; i++) {
+      const randomIdx = Math.floor(Math.random() * nodes.length);
+      nodes[randomIdx].classList.add('active');
+    }
+  }, 600);
+}
 </script>
 
 </body>
